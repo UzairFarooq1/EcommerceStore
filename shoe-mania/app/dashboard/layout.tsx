@@ -9,27 +9,32 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function DashboardLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  noStore();
 
-  if (!user || user.email != "heallight61@gmail.com") {
-    return redirect("/");
-  }
+  // Await the session call asynchronously
+  // const { getUser } = getKindeServerSession();
+  // const user = await getUser();
+
+  // // Redirect if the user is not logged in or the email is incorrect
+  // if (!user || user.email !== "heallight61@gmail.com") {
+  //   return redirect("/");
+  // }
+
   return (
     <div className="flex w-full flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <header className="sticky top-0 flex h-16 items-center justify-between gap-4 border-b bg-white">
-        {/* {children} */}
         <nav className="hidden font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <DashboardNavigation />
         </nav>
@@ -45,27 +50,28 @@ export default async function DashboardLayout({
             </Button>
           </SheetTrigger>
           <SheetContent side="left">
-            <nav className="flex flex-col gap-6 text-lg font-medium">
+            <nav className="flex flex-col gap-6 text-lg font-medium mt-5">
               <DashboardNavigation />
             </nav>
           </SheetContent>
         </Sheet>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">
               <CircleUser className="w-5 h-5" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="center">
+          <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogoutLink>Log out</LogoutLink>
+            <DropdownMenuItem asChild>
+              <LogoutLink>Logout</LogoutLink>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </header>
-      <main>{children}</main>
+      <main className="my-5">{children}</main>
     </div>
   );
 }
