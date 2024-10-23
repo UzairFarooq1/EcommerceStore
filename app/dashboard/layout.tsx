@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { DashboardNavigation } from "../components/dashboard/DashboardNavigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { CircleUser, MenuIcon } from "lucide-react";
@@ -15,6 +14,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { unstable_noStore as noStore } from "next/cache";
+import { DashboardNavigation } from "../components/dashboard/DashboardNavigation";
 
 export default async function DashboardLayout({
   children,
@@ -22,16 +22,12 @@ export default async function DashboardLayout({
   children: ReactNode;
 }) {
   noStore();
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
 
-  // Await the session call asynchronously
-  // const { getUser } = getKindeServerSession();
-  // const user = await getUser();
-
-  // // Redirect if the user is not logged in or the email is incorrect
-  // if (!user || user.email !== "heallight61@gmail.com") {
-  //   return redirect("/");
-  // }
-
+  if (!user || user.email !== "jan@alenix.de") {
+    return redirect("/");
+  }
   return (
     <div className="flex w-full flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <header className="sticky top-0 flex h-16 items-center justify-between gap-4 border-b bg-white">
