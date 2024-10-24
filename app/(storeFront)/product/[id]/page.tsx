@@ -1,11 +1,11 @@
-import { ShoppingBagButton } from "@/components/ui/button";
-import { FeaturedProducts } from "@/components/storefront/featured-products";
-import { ImageSlider } from "@/components/storefront/image-slider";
 import { StarIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
-import prisma from "@/lib/db";
-import { addItem } from "@/app/actions";
+import { ShoppingBagButton } from "@/app/components/SubmitButtons";
+import { addItem } from "@/app/action";
+import prisma from "@/app/lib/db";
+import { ImageSlider } from "@/app/components/storefront/ImageSlider";
+import { FeaturedProducts } from "@/app/components/storefront/FeaturedProducts";
 
 interface ProductPageProps {
   params: {
