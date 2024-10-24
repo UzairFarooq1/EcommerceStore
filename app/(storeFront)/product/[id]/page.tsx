@@ -1,11 +1,11 @@
-import { StarIcon } from "lucide-react";
-import { notFound } from "next/navigation";
-import { unstable_noStore as noStore } from "next/cache";
 import { ShoppingBagButton } from "@/app/components/SubmitButtons";
 import { FeaturedProducts } from "@/app/components/storefront/FeaturedProducts";
 import { ImageSlider } from "@/app/components/storefront/ImageSlider";
 import prisma from "@/app/lib/db";
 import { addItem } from "@/app/action";
+import { StarIcon } from "lucide-react";
+import { notFound } from "next/navigation";
+import { unstable_noStore as noStore } from "next/cache";
 
 type ProductPageProps = {
   params: {
@@ -35,7 +35,7 @@ async function getData(productId: string) {
   return data;
 }
 
-export async function ProductPage({ params }: ProductPageProps) {
+export default async function ProductPage({ params }: ProductPageProps) {
   noStore();
   const data = await getData(params.id);
   const addProductToShoppingCart = addItem.bind(null, data.id);
