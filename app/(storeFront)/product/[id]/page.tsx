@@ -35,7 +35,7 @@ async function getData(productId: string) {
   return data;
 }
 
-export default async function ProductPage({ params }: ProductPageProps) {
+export async function ProductPage({ params }: ProductPageProps) {
   noStore();
   const data = await getData(params.id);
   const addProductToShoppingCart = addItem.bind(null, data.id);
