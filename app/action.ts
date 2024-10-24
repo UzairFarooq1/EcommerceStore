@@ -153,6 +153,7 @@ export async function addItem(productId: string) {
     return redirect("/");
   }
 
+  // eslint-disable-next-line prefer-const
   let cart: Cart | null = await redis.get(`cart-${user.id}`);
 
   const selectedProduct = await prisma.product.findUnique({
@@ -223,6 +224,7 @@ export async function delItem(formData: FormData) {
 
   const productId = formData.get("productId");
 
+  // eslint-disable-next-line prefer-const
   let cart: Cart | null = await redis.get(`cart-${user.id}`);
 
   if (cart && cart.items) {
@@ -245,6 +247,7 @@ export async function checkOut() {
     return redirect("/");
   }
 
+  // eslint-disable-next-line prefer-const
   let cart: Cart | null = await redis.get(`cart-${user.id}`);
 
   if (cart && cart.items) {
