@@ -2,16 +2,17 @@ import { StarIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
 import { ShoppingBagButton } from "@/app/components/SubmitButtons";
-import { addItem } from "@/app/action";
-import prisma from "@/app/lib/db";
-import { ImageSlider } from "@/app/components/storefront/ImageSlider";
 import { FeaturedProducts } from "@/app/components/storefront/FeaturedProducts";
+import { ImageSlider } from "@/app/components/storefront/ImageSlider";
+import prisma from "@/app/lib/db";
+import { addItem } from "@/app/action";
 
-interface ProductPageProps {
+type ProductPageProps = {
   params: {
     id: string;
   };
-}
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
 async function getData(productId: string) {
   const data = await prisma.product.findUnique({
