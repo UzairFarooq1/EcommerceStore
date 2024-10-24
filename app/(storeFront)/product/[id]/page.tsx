@@ -7,6 +7,11 @@ import { unstable_noStore as noStore } from "next/cache";
 import { ImageSlider } from "@/app/components/storefront/ImageSlider";
 import { addItem } from "@/app/action";
 
+// Define the custom type for params
+type Params = {
+  id: string;
+};
+
 async function getData(productId: string) {
   const data = await prisma.product.findUnique({
     where: {
@@ -31,11 +36,12 @@ async function getData(productId: string) {
 export default async function ProductIdRoute({
   params,
 }: {
-  params: { id: string };
+  params: Params; // Use the custom type here
 }) {
   noStore();
   const data = await getData(params.id);
   const addProducttoShoppingCart = addItem.bind(null, data.id);
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start lg:gap-x-24 py-6">
